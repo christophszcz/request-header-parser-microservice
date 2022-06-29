@@ -1,6 +1,3 @@
-// index.js
-// where your node app starts
-
 // init project
 require('dotenv').config();
 var express = require('express');
@@ -19,9 +16,9 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-// your first API endpoint...
 app.get("/api/whoami", function (req, res) {
-  // res.json({ ipaddress: });
+  const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  res.json({ ipaddress: ipAddress });
 });
 
 // listen for requests
