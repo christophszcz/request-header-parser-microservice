@@ -18,7 +18,8 @@ app.get("/", function (req, res) {
 
 app.get("/api/whoami", function (req, res) {
   const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  res.json({ ipaddress: ipAddress });
+  const language = req.headers['accept-language'];
+  res.json({ ipaddress: ipAddress, language: language });
 });
 
 // listen for requests
