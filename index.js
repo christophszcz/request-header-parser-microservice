@@ -17,12 +17,20 @@ app.get("/", function (req, res) {
 });
 
 app.get("/api/whoami", function (req, res) {
-  const userInfo = { language: undefined, language: undefined, software: undefined };
+  const userInfo = { ipaddress: undefined, language: undefined, software: undefined };
   const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const language = req.headers['accept-language'];
-  const software = req.headers['user-agent'];
+  const software = req.headers['user-agent'];;
 
-  res.json({ ipaddress: ipAddress, language: language, software: software });
+  userInfo.ipaddress = ipAddress;
+  userInfo.language = language;
+  userInfo.software = software;
+
+  if (ipAddress) {
+    res.json(userInfo);
+  } else {
+    res.json({ error : "Error" });
+  }
 });
 
 // listen for requests
